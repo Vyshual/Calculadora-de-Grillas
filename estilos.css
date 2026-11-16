@@ -1,0 +1,181 @@
+/* =====================================================================================
+   ESTILOS — espacio de trabajo en verde azulado (inspirado en la imagen de referencia)
+   Paneles profundos, tarjetas claras, formas muy redondeadas, botones en píldora.
+   ===================================================================================== */
+
+/* --- MÓDULO 1: VARIABLES (claro y oscuro) ---------------------------------------------- */
+:root, :root[data-tema="claro"] {
+  color-scheme: light;
+  --fondo: #d9e5e4; --panel: #0c4f54; --sobre-panel: #e8f4f3;
+  --tarjeta: #eef5f4; --campo: #dfeae9; --hoja: #ffffff;
+  --tinta: #0b2f33; --tinta-suave: #4a6a6d; --linea: #bcd0d0;
+  --marca: #0c4f54; --sobre-marca: #eef7f6; --acento: #27c4ae; --sobre-acento: #032a2d;
+  --cian: #0097b8; --magenta: #d02a6b; --amarillo: #d9a400;
+  --error: #a8231b; --fondo-error: #fbe6e3; --aviso: #7a5a00; --fondo-aviso: #fff3c4; --ok: #14704a; --fondo-ok: #dcf2e6;
+  --sombra: 0 14px 30px rgba(8, 52, 56, 0.18); --sombra-suave: 0 4px 12px rgba(8, 52, 56, 0.14);
+}
+:root[data-tema="oscuro"] {
+  color-scheme: dark;
+  --fondo: #04191b; --panel: #0a3b3f; --sobre-panel: #e4f1f0;
+  --tarjeta: #0e2b2f; --campo: #0a2024; --hoja: #1a4a50;
+  --tinta: #e3f0ef; --tinta-suave: #8eb0b1; --linea: #1d484d;
+  --marca: #34d3bf; --sobre-marca: #032a2d; --acento: #34d3bf; --sobre-acento: #032a2d;
+  --cian: #35c8e8; --magenta: #ff6aa2; --amarillo: #f2c200;
+  --error: #ff8f86; --fondo-error: #3a1c1f; --aviso: #f2c200; --fondo-aviso: #33290c; --ok: #58d696; --fondo-ok: #10301f;
+  --sombra: 0 14px 30px rgba(0, 0, 0, 0.45); --sombra-suave: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+/* --- MÓDULO 2: BASE ------------------------------------------------------------------ */
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--fondo); color: var(--tinta); font: 16px/1.5 system-ui, "Segoe UI", Roboto, sans-serif; font-variant-numeric: tabular-nums; }
+:focus-visible { outline: 3px solid var(--acento); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* --- MÓDULO 3: BARRA SUPERIOR ------------------------------------------------------------ */
+.barra-superior { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 12px; padding: 8px 10px 8px 22px; background: var(--panel); color: var(--sobre-panel); border-radius: 999px; box-shadow: var(--sombra); }
+.barra-superior h1 { margin: 0; font-size: 1.05rem; letter-spacing: 0.04em; white-space: nowrap; }
+.logo { color: var(--acento); margin-right: 6px; }
+.acciones-superiores { display: flex; gap: 8px; }
+.boton-icono, .boton-tema { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 44px; height: 44px; padding: 0 14px; font: inherit; font-size: 0.9rem; color: var(--sobre-panel); background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 999px; cursor: pointer; transition: background 0.15s; }
+.boton-icono:hover, .boton-tema:hover { background: rgba(255, 255, 255, 0.2); }
+
+/* --- MÓDULO 4: ESPACIO DE TRABAJO (3 zonas en escritorio) ----------------------------------- */
+.espacio { display: grid; gap: 16px; align-items: start; max-width: 1600px; margin: 0 auto; padding: 0 12px 28px;
+  grid-template-columns: minmax(340px, 410px) minmax(0, 1fr) minmax(300px, 370px); grid-template-areas: "datos vista resultados"; }
+.panel-datos { grid-area: datos; } .panel-vista { grid-area: vista; } .panel-resultados { grid-area: resultados; }
+.panel { background: var(--panel); color: var(--sobre-panel); border-radius: 30px; padding: 18px; box-shadow: var(--sombra); }
+.pestana { display: inline-block; margin-bottom: 14px; padding: 4px 16px; border-radius: 999px; background: var(--tarjeta); color: var(--tinta); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+@media (min-width: 1100px) {
+  .panel { position: sticky; top: 80px; max-height: calc(100dvh - 96px); overflow-y: auto; }
+}
+
+/* --- MÓDULO 5: OBJETIVOS Y BOTONES -------------------------------------------------------------- */
+.objetivos { display: flex; flex-wrap: wrap; gap: 8px; }
+.descripcion-objetivo { margin: 8px 2px 14px; font-size: 0.9rem; color: var(--sobre-panel); opacity: 0.85; }
+.chip { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 18px; font: inherit; font-size: 0.9rem; font-weight: 600; color: var(--tinta); background: var(--tarjeta); border: 2px solid transparent; border-radius: 999px; cursor: pointer; white-space: nowrap; transition: transform 0.12s, border-color 0.15s, background 0.15s; }
+.chip:hover { border-color: var(--acento); }
+.chip:active { transform: scale(0.97); }
+.chip[aria-pressed="true"] { background: var(--acento); color: var(--sobre-acento); }
+.tarjeta .chip { background: var(--campo); }
+.tarjeta .chip[aria-pressed="true"], .tarjeta .chip.activo { background: var(--acento); color: var(--sobre-acento); }
+.boton-sugerir { width: 100%; min-height: 52px; margin-bottom: 14px; font: inherit; font-size: 1.02rem; font-weight: 800; letter-spacing: 0.03em; color: var(--sobre-acento); background: var(--acento); border: 0; border-radius: 999px; box-shadow: var(--sombra-suave); cursor: pointer; transition: transform 0.12s, filter 0.15s; }
+.boton-sugerir:hover { filter: brightness(1.08); }
+.boton-sugerir:active { transform: scale(0.98); }
+#boton-abrir-todas { margin-top: 4px; }
+
+/* --- MÓDULO 6: TARJETAS DESPLEGABLES -------------------------------------------------------------- */
+.tarjeta { margin-bottom: 12px; background: var(--tarjeta); color: var(--tinta); border-radius: 22px; box-shadow: var(--sombra-suave); overflow: hidden; }
+.tarjeta > summary { display: flex; align-items: center; gap: 10px; min-height: 56px; padding: 10px 16px; cursor: pointer; list-style: none; }
+.tarjeta > summary::-webkit-details-marker { display: none; }
+.tarjeta > summary::after { content: "›"; margin-left: 4px; font-size: 1.5rem; line-height: 1; color: var(--tinta-suave); transform: rotate(90deg); transition: transform 0.2s; }
+.tarjeta[open] > summary::after { transform: rotate(-90deg); }
+.titulo-tarjeta { font-weight: 800; }
+.resumen { margin-left: auto; min-width: 0; font-size: 0.8rem; color: var(--tinta-suave); text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tarjeta[open] .resumen { display: none; }
+.tarjeta[open] > summary { margin-bottom: -4px; }
+.cuerpo { padding: 4px 16px 18px; }
+.fila { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+label { display: block; min-width: 0; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--tinta-suave); }
+input, select { width: 100%; height: 46px; margin-top: 5px; padding: 0 12px; font: inherit; font-size: 1rem; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--tinta); background: var(--campo); border: 1px solid var(--linea); border-radius: 14px; }
+input:disabled { opacity: 0.5; }
+.ayuda { margin: 10px 0 0; font-size: 0.82rem; color: var(--tinta-suave); }
+.chips-formato { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.chips-formato .chip { min-height: 38px; padding: 0 14px; font-size: 0.82rem; }
+.captura { margin-top: 14px; padding: 12px; border: 2px dashed var(--linea); border-radius: 18px; }
+.texto-leido { margin-top: 6px; font-size: 0.8rem; color: var(--tinta-suave); }
+.texto-leido pre { margin: 6px 0 0; white-space: pre-wrap; }
+.siguiente { margin-top: 16px; float: right; }
+.cuerpo::after { content: ""; display: block; clear: both; }
+
+/* --- MÓDULO 7: VISTA PREVIA --------------------------------------------------------------------------- */
+.lienzo { display: flex; align-items: center; justify-content: center; min-height: 280px; padding: 16px; background: var(--tarjeta); border-radius: 22px; }
+.lienzo svg { display: block; width: 100%; height: auto; max-height: min(72dvh, 760px); filter: drop-shadow(0 8px 18px rgba(8, 52, 56, 0.25)); }
+.vacio { max-width: 28ch; margin: 0; color: var(--tinta-suave); text-align: center; }
+.capas { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.capas .chip { min-height: 38px; font-size: 0.82rem; opacity: 0.7; }
+.capas .chip[aria-pressed="true"] { opacity: 1; }
+
+/* --- MÓDULO 8: RESULTADOS Y ESTADO ----------------------------------------------------------------------- */
+.contenido-resultado { padding: 16px; background: var(--tarjeta); color: var(--tinta); border-radius: 22px; }
+.insignia { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 10px; padding: 4px 14px; border-radius: 999px; font-weight: 800; font-size: 0.9rem; }
+.insignia::before, .mensaje::before { font-weight: 800; }
+.insignia.ok { background: var(--fondo-ok); color: var(--ok); } .insignia.aviso { background: var(--fondo-aviso); color: var(--aviso); } .insignia.error { background: var(--fondo-error); color: var(--error); }
+.insignia.ok::before, .mensaje.ok::before { content: "✓"; } .insignia.aviso::before, .mensaje.aviso::before { content: "!"; } .insignia.error::before, .mensaje.error::before { content: "✕"; }
+.mensaje { display: flex; gap: 10px; margin: 8px 0; padding: 10px 12px; border-left: 4px solid; border-radius: 10px; font-size: 0.9rem; }
+.mensaje.error { border-color: var(--error); background: var(--fondo-error); color: var(--error); }
+.mensaje.aviso { border-color: var(--amarillo); background: var(--fondo-aviso); color: var(--aviso); }
+.mensaje.ok { border-color: var(--ok); background: var(--fondo-ok); color: var(--ok); }
+.esquema { display: grid; grid-template-columns: 1fr minmax(80px, 1.1fr) 1fr; gap: 8px; align-items: center; margin: 12px 0 16px; text-align: center; }
+.esquema .m span { display: block; font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tinta-suave); }
+.esquema .m strong { font-size: 1.05rem; }
+.esquema .sup { grid-column: 2; } .esquema .izq { grid-column: 1; grid-row: 2; } .esquema .der { grid-column: 3; grid-row: 2; } .esquema .inf { grid-column: 2; grid-row: 3; }
+.esquema .pagina { grid-column: 2; grid-row: 2; display: grid; place-items: center; min-height: 72px; border: 2px dashed var(--magenta); border-radius: 12px; font-size: 0.74rem; color: var(--tinta-suave); }
+dl { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; margin: 0 0 14px; font-size: 0.92rem; }
+dt { color: var(--tinta-suave); } dd { margin: 0; font-weight: 700; text-align: right; }
+.opciones-lista { display: grid; gap: 8px; margin: 0 0 14px; padding: 0; list-style: none; }
+.opcion { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; min-height: 56px; padding: 8px 16px; font: inherit; color: var(--tinta); text-align: left; background: var(--campo); border: 2px solid transparent; border-radius: 16px; cursor: pointer; transition: border-color 0.15s; }
+.opcion:hover { border-color: var(--acento); }
+.opcion strong { display: block; } .opcion small { color: var(--tinta-suave); }
+.opcion::after { content: "Usar ›"; font-size: 0.8rem; font-weight: 700; color: var(--marca); }
+.acciones { display: flex; flex-wrap: wrap; gap: 8px; }
+.contenido-resultado .chip { background: var(--campo); }
+
+/* --- MÓDULO 9: NAVEGACIÓN INFERIOR (celular) -------------------------------------------------------------- */
+.pestanas-inferiores { display: none; }
+
+/* --- MÓDULO 10: TABLET --------------------------------------------------------------------------------------- */
+@media (max-width: 1099px) {
+  .espacio { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "datos vista" "datos resultados"; }
+}
+
+/* --- MÓDULO 11: CELULAR -------------------------------------------------------------------------------------- */
+@media (max-width: 699px) {
+  .barra-superior { margin: 8px; padding-left: 16px; }
+  .barra-superior h1 { font-size: 0.95rem; }
+  .etiqueta-tema { display: none; }
+  .boton-tema { padding: 0; width: 44px; }
+  .espacio { display: block; padding: 0 8px calc(96px + env(safe-area-inset-bottom)); }
+  .panel { display: none; padding: 14px; border-radius: 26px; }
+  body[data-vista="datos"] .panel-datos, body[data-vista="vista"] .panel-vista, body[data-vista="resultados"] .panel-resultados { display: block; }
+  .pestanas-inferiores { position: fixed; left: 10px; right: 10px; bottom: calc(10px + env(safe-area-inset-bottom)); z-index: 30; display: flex; gap: 4px; padding: 6px; background: var(--panel); border-radius: 999px; box-shadow: var(--sombra); }
+  .pestana-inferior { flex: 1; min-height: 48px; font: inherit; font-weight: 700; color: var(--sobre-panel); background: transparent; border: 0; border-radius: 999px; cursor: pointer; }
+  .pestana-inferior[aria-current="page"] { background: var(--acento); color: var(--sobre-acento); }
+  .lienzo { min-height: 240px; padding: 10px; } .lienzo svg { max-height: 62dvh; }
+  .fila { gap: 10px; }
+}
+
+/* --- MÓDULO 12: SECCIÓN TIPOGRAFÍA ----------------------------------------------------------------- */
+.secciones { display: flex; gap: 4px; padding: 4px; background: rgba(255, 255, 255, 0.1); border-radius: 999px; }
+.seccion { min-height: 40px; padding: 0 20px; font: inherit; font-weight: 700; color: var(--sobre-panel); background: transparent; border: 0; border-radius: 999px; cursor: pointer; }
+.seccion[aria-current="page"] { background: var(--acento); color: var(--sobre-acento); }
+.espacio-tipo { display: none; grid-template-columns: minmax(340px, 500px) minmax(0, 1fr); }
+body[data-seccion="tipografia"] .espacio-tipo { display: grid; }
+body[data-seccion="tipografia"] .espacio-grilla, body[data-seccion="tipografia"] .pestanas-inferiores { display: none; }
+.nivel { margin-bottom: 12px; padding: 14px 16px; background: var(--tarjeta); color: var(--tinta); border-radius: 22px; box-shadow: var(--sombra-suave); }
+.fila.tres { grid-template-columns: 1fr 1fr 1fr; }
+.fila.tres input, .fila.tres select { padding: 0 8px; }
+.estado-nivel { margin: 10px 0 0; font-size: 0.82rem; font-weight: 700; }
+.estado-nivel.ok { color: var(--ok); } .estado-nivel.aviso { color: var(--aviso); }
+.nivel .acciones { margin-top: 10px; } .nivel .chip { min-height: 38px; padding: 0 14px; font-size: 0.82rem; background: var(--campo); }
+.linea-paleta { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--linea); font-size: 0.92rem; }
+.linea-paleta small { font-weight: 700; } .linea-paleta .ok { color: var(--ok); } .linea-paleta .aviso { color: var(--aviso); }
+.panel-niveles-vacio { color: var(--tinta-suave); }
+#hoja-impresion { display: none; }
+@media print { body > *:not(#hoja-impresion) { display: none !important; } #hoja-impresion { display: block !important; } body { background: #fff; } }
+@media (max-width: 1099px) { .espacio-tipo { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 699px) {
+  .barra-superior h1 .texto-titulo { display: none; }
+  .seccion { padding: 0 14px; }
+  .espacio-tipo .panel { display: block; margin-bottom: 12px; }
+  body[data-seccion="tipografia"] .espacio-tipo { display: block; padding-bottom: 24px; }
+  .fila.tres { grid-template-columns: 1fr 1fr; }
+}
+
+/* --- MÓDULO 13: VISOR A PANTALLA GRANDE ---------------------------------------------------------------- */
+#visor { width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: var(--fondo); color: var(--tinta); }
+#visor[open] { display: flex; flex-direction: column; }
+#visor::backdrop { background: rgba(0, 0, 0, 0.6); }
+.visor-barra { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 16px; background: var(--panel); color: var(--sobre-panel); }
+.visor-cuerpo { flex: 1; display: flex; justify-content: center; align-items: flex-start; padding: 16px; overflow: auto; }
+.visor-cuerpo svg { display: block; flex: none; box-shadow: var(--sombra); }

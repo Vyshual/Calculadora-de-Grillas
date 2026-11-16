@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grilla tipográfica – Visualizador</title>
+  <link rel="stylesheet" href="estilos.css">
+  <script src="tema.js"></script>
+</head>
+<body>
+
+  <!-- --- CABECERA ------------------------------------------------------------------ -->
+  <header class="cabecera">
+    <h1>Grilla tipográfica</h1>
+    <nav class="navegacion">
+      <a href="index.html">Calculadora</a>
+      <a href="visualizador.html" aria-current="page">Visualizador</a>
+    </nav>
+  </header>
+
+  <main class="visualizador">
+
+    <!-- --- LIENZO (la página dibujada en SVG) ------------------------------------------ -->
+    <div class="lienzo" id="lienzo"></div>
+
+    <!-- --- OPCIONES DE CAPAS ------------------------------------------------------------ -->
+    <aside class="opciones">
+      <label><input type="checkbox" id="ver-lineas" checked> Grilla base</label>
+      <label><input type="checkbox" id="ver-margenes" checked> Márgenes</label>
+      <label><input type="checkbox" id="ver-columnas" checked> Columnas</label>
+      <label><input type="checkbox" id="ver-modulos" checked> Módulos</label>
+      <div id="mensajes"></div>
+      <a class="boton" href="index.html">Volver a la calculadora</a>
+    </aside>
+
+  </main>
+
+  <script src="nucleo.js"></script>
+  <script src="estado.js"></script>
+  <script src="visualizador.js"></script>
+</body>
+</html>

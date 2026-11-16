@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0c4f54">
+  <title>Grilla tipográfica</title>
+  <link rel="stylesheet" href="estilos.css">
+  <script src="tema.js"></script>
+</head>
+<body data-vista="datos">
+
+  <!-- --- BARRA SUPERIOR ---------------------------------------------------------------- -->
+  <header class="barra-superior">
+    <h1><span class="logo" aria-hidden="true">▦</span><span class="texto-titulo"> Grilla tipográfica</span></h1>
+    <nav class="secciones" aria-label="Secciones de la app">
+      <button type="button" class="seccion" data-seccion="grilla" aria-current="page">Grilla</button>
+      <button type="button" class="seccion" data-seccion="tipografia" aria-current="false">Tipografía</button>
+    </nav>
+    <div class="acciones-superiores">
+      <button type="button" class="boton-icono" id="boton-restablecer" title="Restablecer datos" aria-label="Restablecer datos">⟲</button>
+    </div>
+  </header>
+
+  <main class="espacio espacio-grilla">
+
+    <!-- --- PANEL 1: DATOS ---------------------------------------------------------------- -->
+    <section class="panel panel-datos" aria-labelledby="titulo-datos">
+      <span class="pestana" id="titulo-datos">Datos</span>
+
+      <div class="objetivos" role="group" aria-label="Qué querés obtener">
+        <button type="button" class="chip chip-objetivo" data-objetivo="margenes">Márgenes</button>
+        <button type="button" class="chip chip-objetivo" data-objetivo="rapido">Rápido</button>
+        <button type="button" class="chip chip-objetivo" data-objetivo="interlineado">Interlineado</button>
+        <button type="button" class="chip chip-objetivo" data-objetivo="verificar">Revisar</button>
+      </div>
+      <p class="descripcion-objetivo" id="descripcion-objetivo"></p>
+
+      <button type="button" class="boton boton-sugerir" id="boton-sugerir">✦ Elegir por mí</button>
+
+      <form id="formulario" autocomplete="off">
+
+        <!-- --- TARJETA: FORMATO ------------------------------------------------------------ -->
+        <details class="tarjeta" data-paso="formato" open>
+          <summary><span class="titulo-tarjeta">Formato</span><span class="resumen" data-resumen="formato"></span></summary>
+          <div class="cuerpo">
+            <div class="chips-formato" id="chips-formato" aria-label="Formatos frecuentes"></div>
+            <div class="fila">
+              <label>Ancho<input type="number" name="ancho" min="0" step="any" inputmode="decimal"></label>
+              <label>Alto<input type="number" name="alto" min="0" step="any" inputmode="decimal"></label>
+            </div>
+            <div class="fila">
+              <label>Unidad
+                <select name="unidad">
+                  <option value="px">px</option><option value="pt">pt</option><option value="mm">mm</option>
+                  <option value="cm">cm</option><option value="in">pulgadas</option>
+                </select></label>
+              <label>Resolución (ppp)<input type="number" name="ppp" min="1" step="any" inputmode="decimal"></label>
+            </div>
+            <div class="captura">
+              <input type="file" id="archivo-captura" accept="image/*" hidden>
+              <button type="button" class="chip" id="boton-captura">📷 Leer captura de Affinity</button>
+              <span class="ayuda">o pegala con Ctrl+V</span>
+              <p class="ayuda" id="estado-captura" aria-live="polite"></p>
+              <details class="texto-leido"><summary>Ver el texto que leyó</summary><pre id="texto-leido"></pre></details>
+            </div>
+            <button type="button" class="chip siguiente" data-siguiente>Siguiente ›</button>
+          </div>
+        </details>
+
+        <!-- --- TARJETA: GRILLA BASE ---------------------------------------------------------- -->
+        <details class="tarjeta" data-paso="grilla">
+          <summary><span class="titulo-tarjeta">Grilla base</span><span class="resumen" data-resumen="grilla"></span></summary>
+          <div class="cuerpo">
+            <div class="fila">
+              <label data-objetivos="margenes rapido verificar">Interlineado<input type="number" name="interlineado" min="0" step="any" inputmode="decimal"></label>
+              <label>Unidad del interlineado
+                <select name="unidadInterlineado"><option value="px">px</option><option value="pt">pt</option><option value="mm">mm</option></select></label>
+            </div>
+            <div class="fila">
+              <label data-objetivos="margenes rapido verificar">Módulos (filas)<input type="number" name="filas" min="1" step="1" inputmode="numeric"></label>
+              <label data-objetivos="margenes verificar">Líneas por módulo<input type="number" name="lineasPorModulo" min="1" step="1" inputmode="numeric"></label>
+            </div>
+            <div class="fila">
+              <label data-objetivos="margenes verificar">Líneas entre módulos<input type="number" name="lineasMedianil" min="0" step="1" inputmode="numeric"></label>
+              <label data-objetivos="margenes verificar">Márgenes verticales
+                <select name="modoMargenes"><option value="clasico">Clásicos</option><option value="libre">Libres</option></select></label>
+            </div>
+            <div class="fila">
+              <label data-objetivos="rapido">Margen aproximado (opcional)<input type="number" name="margenAproximado" min="0" step="any" inputmode="decimal"></label>
+              <label data-objetivos="interlineado">Margen deseado<input type="number" name="margenDeseado" min="0" step="any" inputmode="decimal"></label>
+            </div>
+            <div class="fila">
+              <label>Grilla pequeña (para notas)
+                <select name="subdivision" data-numerico><option value="2">Mitad (½)</option><option value="3">Tercio (⅓)</option><option value="4">Cuarto (¼)</option><option value="1">Sin grilla pequeña</option></select></label>
+            </div>
+            <p class="ayuda" data-objetivos="rapido">El espacio entre módulos es de una línea.</p>
+            <button type="button" class="chip siguiente" data-siguiente>Siguiente ›</button>
+          </div>
+        </details>
+
+        <!-- --- TARJETA: MÁRGENES (solo al revisar una grilla completa) ----------------------- -->
+        <details class="tarjeta" data-paso="margenes">
+          <summary><span class="titulo-tarjeta">Márgenes</span><span class="resumen" data-resumen="margenes"></span></summary>
+          <div class="cuerpo">
+            <div class="fila">
+              <label>Superior<input type="number" name="margenSuperior" min="0" step="any" inputmode="decimal"></label>
+              <label>Inferior<input type="number" name="margenInferior" min="0" step="any" inputmode="decimal"></label>
+            </div>
+            <div class="fila">
+              <label>Izquierdo<input type="number" name="margenIzquierdo" min="0" step="any" inputmode="decimal"></label>
+              <label>Derecho<input type="number" name="margenDerecho" min="0" step="any" inputmode="decimal"></label>
+            </div>
+            <p class="ayuda">Con márgenes verticales clásicos, superior e inferior se calculan solos.</p>
+            <button type="button" class="chip siguiente" data-siguiente>Siguiente ›</button>
+          </div>
+        </details>
+
+        <!-- --- TARJETA: COLUMNAS ------------------------------------------------------------ -->
+        <details class="tarjeta" data-paso="columnas">
+          <summary><span class="titulo-tarjeta">Columnas</span><span class="resumen" data-resumen="columnas"></span></summary>
+          <div class="cuerpo">
+            <div class="fila">
+              <label>Cantidad<input type="number" name="columnas" min="1" step="1" inputmode="numeric"></label>
+              <label>Medianil<input type="number" name="medianil" min="0" step="any" inputmode="decimal"></label>
+            </div>
+            <div class="fila">
+              <label data-objetivos="margenes">Ancho de columna (opcional)<input type="number" name="anchoColumna" min="0" step="any" inputmode="decimal"></label>
+            </div>
+            <p class="ayuda" data-objetivos="margenes">Si lo dejás en 0, los márgenes laterales quedan iguales a los verticales.</p>
+          </div>
+        </details>
+
+      </form>
+      <button type="button" class="chip" id="boton-abrir-todas">Abrir todas</button>
+    </section>
+
+    <!-- --- PANEL 2: VISTA PREVIA ---------------------------------------------------------- -->
+    <section class="panel panel-vista" aria-labelledby="titulo-vista">
+      <span class="pestana" id="titulo-vista">Vista</span>
+      <div class="lienzo" id="lienzo"></div>
+      <div class="capas" role="group" aria-label="Capas del dibujo">
+        <button type="button" class="chip" data-capa="lineas" aria-pressed="true">Grilla base</button>
+        <button type="button" class="chip" data-capa="pequena" aria-pressed="true">Grilla pequeña</button>
+        <button type="button" class="chip" data-capa="margenes" aria-pressed="true">Márgenes</button>
+        <button type="button" class="chip" data-capa="columnas" aria-pressed="true">Columnas</button>
+        <button type="button" class="chip" data-capa="modulos" aria-pressed="true">Módulos</button>
+        <button type="button" class="chip activo" id="boton-ampliar">⤢ Pantalla grande</button>
+      </div>
+    </section>
+
+    <!-- --- PANEL 3: RESULTADOS ------------------------------------------------------------ -->
+    <section class="panel panel-resultados" aria-labelledby="titulo-resultado" aria-live="polite">
+      <span class="pestana" id="titulo-resultado">Resultado</span>
+      <div class="contenido-resultado">
+        <div id="insignia" class="insignia ok"></div>
+        <div id="nota-sugerencia"></div>
+        <div id="mensajes"></div>
+        <div class="esquema" id="esquema" hidden></div>
+        <dl id="datos"></dl>
+        <ul class="opciones-lista" id="opciones"></ul>
+        <div class="acciones">
+          <button type="button" class="chip" id="boton-copiar">Copiar valores</button>
+          <button type="button" class="chip" id="boton-csv">Descargar CSV</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- --- SECCIÓN TIPOGRAFÍA: jerarquías sobre la grilla ------------------------------------- -->
+  <main class="espacio espacio-tipo">
+    <section class="panel" aria-labelledby="titulo-niveles">
+      <span class="pestana" id="titulo-niveles">Jerarquía</span>
+      <details class="tarjeta" open>
+        <summary><span class="titulo-tarjeta">Generar escala desde la grilla</span></summary>
+        <div class="cuerpo">
+          <div class="fila">
+            <label>Tipografía base<input id="tipo-base" list="lista-fuentes"></label>
+            <label>Cuerpo (pt)<input type="number" id="tipo-cuerpo" min="4" step="0.5" inputmode="decimal"></label>
+          </div>
+          <div class="fila">
+            <label>Razón de escala
+              <select id="tipo-razon"><option value="1.125">1,125 · segunda mayor</option><option value="1.2">1,2 · tercera menor</option><option value="1.25">1,25 · tercera mayor</option><option value="1.333">1,333 · cuarta justa</option><option value="1.5">1,5 · quinta justa</option><option value="1.618">1,618 · áurea</option></select></label>
+            <label>Interlineado de la grilla<input id="tipo-interlineado-base" readonly></label>
+          </div>
+          <div class="acciones" style="margin-top:14px">
+            <button type="button" class="chip activo" id="tipo-generar">Generar niveles</button>
+            <button type="button" class="chip" id="tipo-fuentes">Cargar mis fuentes</button>
+          </div>
+          <p class="ayuda" id="tipo-fuentes-estado">Podés escribir el nombre de cualquier tipografía instalada.</p>
+        </div>
+      </details>
+      <div id="niveles"></div>
+      <button type="button" class="chip" id="tipo-agregar">+ Agregar nivel</button>
+      <datalist id="lista-fuentes"><option value="Arial"><option value="Georgia"><option value="Times New Roman"><option value="Verdana"><option value="Courier New"></datalist>
+    </section>
+    <section class="panel" aria-labelledby="titulo-hoja">
+      <span class="pestana" id="titulo-hoja">Hoja de prueba</span>
+      <div class="lienzo" id="hoja"></div>
+      <div class="acciones" style="margin-top:14px">
+        <button type="button" class="chip activo" id="tipo-ampliar">⤢ Pantalla grande</button>
+        <button type="button" class="chip" id="tipo-copiar">Copiar paleta</button>
+        <button type="button" class="chip" id="tipo-png">Exportar PNG</button>
+        <button type="button" class="chip" id="tipo-pdf">Exportar PDF</button>
+      </div>
+      <div class="contenido-resultado" id="paleta" style="margin-top:14px"></div>
+    </section>
+  </main>
+  <!-- --- VISOR A PANTALLA GRANDE (grilla y hoja de tipografía) ------------------------------- -->
+  <dialog id="visor" aria-label="Vista ampliada">
+    <div class="visor-barra">
+      <strong id="visor-titulo">Vista ampliada</strong>
+      <div class="acciones">
+        <button type="button" class="chip" id="visor-menos" aria-label="Alejar">−</button>
+        <button type="button" class="chip" id="visor-ajustar">Ajustar</button>
+        <button type="button" class="chip" id="visor-mas" aria-label="Acercar">+</button>
+        <button type="button" class="chip activo" id="visor-cerrar">Cerrar ✕</button>
+      </div>
+    </div>
+    <div class="visor-cuerpo" id="visor-cuerpo"></div>
+  </dialog>
+  <div id="hoja-impresion" aria-hidden="true"></div>
+  <style id="estilo-pagina"></style>
+
+  <!-- --- NAVEGACIÓN INFERIOR (solo en celular) ------------------------------------------------ -->
+  <nav class="pestanas-inferiores" aria-label="Secciones">
+    <button type="button" class="pestana-inferior" data-ir="datos" aria-current="page">Datos</button>
+    <button type="button" class="pestana-inferior" data-ir="resultados" aria-current="false">Resultado</button>
+    <button type="button" class="pestana-inferior" data-ir="vista" aria-current="false">Vista</button>
+  </nav>
+
+  <script src="nucleo.js"></script>
+  <script src="estado.js"></script>
+  <script src="app.js"></script>
+  <script src="lectura.js"></script>
+  <script src="tipografia.js"></script>
+</body>
+</html>
